@@ -11,19 +11,20 @@ const contactSchema = new mongoose.Schema(
       required: true,
     },
     email: { type: String },
+    isFavourite: {
+      type: Boolean,
+      default: false,
+    },
     contactType: {
       type: String,
       required: true,
       enum: ['work', 'home', 'personal'],
       default: 'personal',
     },
-    isFavourite: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
