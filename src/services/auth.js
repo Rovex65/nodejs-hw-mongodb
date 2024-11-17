@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt';
-
+import jwt from 'jsonwebtoken';
+import { env } from '../utils/env.js';
 import { UsersCollection } from '../models/user.js';
 import { SessionsCollection } from '../models/session.js';
-import { FIFTEEN_MINUTES, ONE_MONTH } from '../constants/index.js';
+import { FIFTEEN_MINUTES, ONE_MONTH, SMTP } from '../constants/index.js';
 import { randomBytes } from 'crypto';
 import createHttpError from 'http-errors';
+import { sendEmail } from '../utils/sendMail.js';
 
 export const registerUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -104,7 +106,9 @@ export const requestResetToken = async (email) => {
     from: env(SMTP.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+    html: `<p>Click <a href="${env(
+      'APP_DOMAIN',
+    )}${resetToken}">here</a> to reset your password!</p>`,
   });
 };
 
