@@ -108,7 +108,7 @@ export const requestResetToken = async (email) => {
     subject: 'Reset your password',
     html: `<p>Click <a href="${env(
       'APP_DOMAIN',
-    )}${resetToken}">here</a> to reset your password!</p>`,
+    )}/reset-password?token=${resetToken}">here</a> to reset your password!</p>`,
   });
 };
 
