@@ -4,6 +4,7 @@ import { UsersCollection } from '../models/user.js';
 import { SessionsCollection } from '../models/session.js';
 import { FIFTEEN_MINUTES, ONE_MONTH } from '../constants/index.js';
 import { randomBytes } from 'crypto';
+import createHttpError from 'http-errors';
 
 export const registerUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -52,7 +53,7 @@ const createSession = () => {
     accessToken,
     refreshToken,
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_MONTH),
   };
 };
 
